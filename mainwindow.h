@@ -15,8 +15,12 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+private slots:
+    void on_Copy_Btn_ServerAdd_clicked();
+
 private:
     Ui::MainWindow *ui;
+    void loadServerList();
 };
 
 #endif // MAINWINDOW_H
