@@ -7,7 +7,7 @@
 #include <iostream>
 #include <string>
 
-QFile qf_file_servers("/home/box/Projects/pgdbmanage/servers.txt");
+QFile FileServers("/home/box/Projects/pgdbmanage/servers.txt");
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -24,36 +24,36 @@ MainWindow::~MainWindow()
 
 void MainWindow::loadServerList()
 {
-    QStringList wordList;
+    QStringList ServerList;
 
-    qf_file_servers.open(QIODevice::ReadWrite);
-    while (!qf_file_servers.atEnd()) {
-        QByteArray line = qf_file_servers.readLine();
-        wordList.append(line.split('\n').first());
+    FileServers.open(QIODevice::ReadWrite);
+    while (!FileServers.atEnd()) {
+        QByteArray line = FileServers.readLine();
+        ServerList.append(line.split('\n').first());
     }
-    qf_file_servers.close();
+    FileServers.close();
 
-    qDebug() << wordList;
+    qDebug() << ServerList;
 
     ui->Copy_list_Src->clear();
-    ui->Copy_list_Src->addItems(wordList);
+    ui->Copy_list_Src->addItems(ServerList);
     ui->Copy_list_Dest->clear();
-    ui->Copy_list_Dest->addItems(wordList);
+    ui->Copy_list_Dest->addItems(ServerList);
     ui->Backup_list_Src->clear();
-    ui->Backup_list_Src->addItems(wordList);
+    ui->Backup_list_Src->addItems(ServerList);
     ui->Restore_list_Dest->clear();
-    ui->Restore_list_Dest->addItems(wordList);
+    ui->Restore_list_Dest->addItems(ServerList);
 }
 
 
 
 void MainWindow::on_Copy_Btn_ServerAdd_clicked()
 {
-    QString sNewServer = ui->Copy_Line_ServerAdd->text(); // Pulls text from the Copy_Line_ServerAdd element
-    if (qf_file_servers.open(QFile::ReadWrite | QIODevice::Append)) { // Should be abstracted, going to have similar code >= 4 times
-        QTextStream out(&qf_file_servers);
-        out << endl << sNewServer;
+    QString NewServer = ui->Copy_Line_ServerAdd->text(); // Pulls text from the Copy_Line_ServerAdd element
+    if (FileServers.open(QFile::ReadWrite | QIODevice::Append)) { // Should be abstracted, going to have similar code >= 4 times
+        QTextStream out(&FileServers);
+        out << endl << NewServer;
     }
-    qf_file_servers.close();
+    FileServers.close();
     MainWindow::loadServerList();
 }
