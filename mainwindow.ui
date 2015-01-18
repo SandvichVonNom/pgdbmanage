@@ -374,7 +374,7 @@ p, li { white-space: pre-wrap; }
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_restore1">
+      <widget class="QWidget" name="tab_restore">
        <attribute name="title">
         <string>Restore</string>
        </attribute>
