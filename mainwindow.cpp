@@ -7,7 +7,7 @@
 #include <iostream>
 #include <string>
 
-QFile file_server_list("/home/box/Projects/pgdbmanage/servers.txt");
+QFile qf_file_servers("/home/box/Projects/pgdbmanage/servers.txt");
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -24,17 +24,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::loadServerList()
 {
-    using namespace std; // enabled for initial debugging
-
     QStringList wordList;
 
-    file_server_list.open(QIODevice::ReadWrite);
-    while (!file_server_list.atEnd()) {
-        cout << "Checked a line" << endl;
-        QByteArray line = file_server_list.readLine();
+    qf_file_servers.open(QIODevice::ReadWrite);
+    while (!qf_file_servers.atEnd()) {
+        QByteArray line = qf_file_servers.readLine();
         wordList.append(line.split('\n').first());
     }
-    file_server_list.close();
+    qf_file_servers.close();
 
     qDebug() << wordList;
 
@@ -46,18 +43,17 @@ void MainWindow::loadServerList()
     ui->Backup_list_Src->addItems(wordList);
     ui->Restore_list_Dest->clear();
     ui->Restore_list_Dest->addItems(wordList);
-
-    cout << "Finished boys";
-
 }
 
 
 
 void MainWindow::on_Copy_Btn_ServerAdd_clicked()
 {
-    QString sNewServer = ui->Copy_Line_ServerAdd->text();
-    file_server_list.open(QIODevice::WriteOnly | QIODevice::Append);
-    file_server_list.write("\n333");
-    file_server_list.close();
+    QString sNewServer = ui->Copy_Line_ServerAdd->text(); // Pulls text from the Copy_Line_ServerAdd element
+    if (qf_file_servers.open(QFile::ReadWrite | QIODevice::Append)) { // Should be abstracted, going to have similar code >= 4 times
+        QTextStream out(&qf_file_servers);
+        out << endl << sNewServer;
+    }
+    qf_file_servers.close();
     MainWindow::loadServerList();
 }
