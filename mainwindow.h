@@ -18,9 +18,16 @@ public:
 private slots:
     void on_Copy_Btn_ServerAdd_clicked();
 
+    void on_Backup_Btn_ServerAdd_clicked();
+
+    void on_Restore_Btn_ServerAdd_clicked();
+
+    void on_Restore_Btn_File_clicked();
+
 private:
     Ui::MainWindow *ui;
     void loadServerList();
+    void appendServerList(QString);
 };
 
 #endif // MAINWINDOW_H
