@@ -7,6 +7,7 @@
 #include <iostream>
 #include <string>
 #include <QFileDialog>
+#include "expect.h"
 
 QFile FileServers("/home/box/Projects/pgdbmanage/servers.txt");
 
@@ -52,7 +53,8 @@ void MainWindow::appendServerList(QString NewServer)
 {
     if (FileServers.open(QFile::ReadWrite | QIODevice::Append)) {
         QTextStream out(&FileServers);
-        out << endl << NewServer;
+        if (NewServer.length() > 0)
+            out << endl << NewServer;
     }
     FileServers.close();
     MainWindow::loadServerList();
@@ -80,7 +82,13 @@ void MainWindow::on_Restore_Btn_ServerAdd_clicked()
 
 void MainWindow::on_Restore_Btn_File_clicked()
 {
-        QString SqlFile = QFileDialog::getOpenFileName(this,
-        tr("Select SQL Backup"), "", tr("SQL files (*.sql)"));
-        ui->Restore_Line_File->setText(SqlFile);
+    QString SqlFile = QFileDialog::getOpenFileName(this,
+    tr("Select SQL Backup"), "", tr("SQL files (*.sql)"));
+    ui->Restore_Line_File->setText(SqlFile);
+}
+
+
+void MainWindow::on_Backup_Btn_RunBackup_clicked()
+{
+    FILE* fd = exp_popen("ping google.com");
 }

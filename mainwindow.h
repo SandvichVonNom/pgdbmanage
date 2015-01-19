@@ -24,6 +24,8 @@ private slots:
 
     void on_Restore_Btn_File_clicked();
 
+    void on_Backup_Btn_RunBackup_clicked();
+
 private:
     Ui::MainWindow *ui;
     void loadServerList();

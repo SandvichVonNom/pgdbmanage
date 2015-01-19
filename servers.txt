@@ -4,14 +4,4 @@ CYS-PSWin01
 192.168.1.101
 142.20.30.1
 123
-123
-321
-22
-4444
-11
-55
-copy
-backup
-copy2
-backup2
-restor3
+example.gg.net
