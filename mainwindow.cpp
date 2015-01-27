@@ -9,7 +9,7 @@
 #include <QFileDialog>
 #include "expect.h"
 
-QFile FileServers("/home/box/Projects/pgdbmanage/servers.txt");
+QFile FileServers("/home/josh/Projects/pgdbmanage/servers.txt");
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
