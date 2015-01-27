@@ -1,10 +1,8 @@
 # pgdbmanage
 
-|============================|
-|                            |
-| LINUX INSTALL INSTRUCTIONS |
-|                            |
-|============================|
+=====================================
+||| LINUX INSTALL INSTRUCTIONS |||
+=====================================
 
 Requires compile/install of TCL & Expect. Below instructions based on these resources:
 http://www.linuxfromscratch.org/lfs/view/development/chapter05/tcl.html | 
