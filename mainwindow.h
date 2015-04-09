@@ -30,7 +30,6 @@ private:
     Ui::MainWindow *ui;
     void loadServerList();
     void appendServerList(QString);
-    void setupServerList();
 };
 
 #endif // MAINWINDOW_H
