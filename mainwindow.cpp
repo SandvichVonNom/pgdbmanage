@@ -7,16 +7,18 @@
 #include <iostream>
 #include <string>
 #include <QFileDialog>
-#include "expect.h"
+#include <tcl.h>
+#include <expect_tcl.h>
+#include <expect.h>
 
-QFile FileServers("/home/josh/Projects/pgdbmanage/servers.txt");
+QFile fileServers("servers.txt");
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    loadServerList();
+    MainWindow::loadServerList();
 }
 
 MainWindow::~MainWindow()
@@ -29,12 +31,22 @@ void MainWindow::loadServerList()
 {
     QStringList ServerList;
 
-    FileServers.open(QIODevice::ReadWrite);
-    while (!FileServers.atEnd()) {
-        QByteArray line = FileServers.readLine();
+    if (!fileServers.exists())
+    {
+        if (fileServers.open(QFile::ReadWrite | QIODevice::Append)) {
+            QTextStream out(&fileServers);
+            out << "foo.bar";
+        }
+        fileServers.close();
+    }
+
+    fileServers.open(QIODevice::ReadWrite);
+    while (!fileServers.atEnd()) {
+        QByteArray line = fileServers.readLine();
         ServerList.append(line.split('\n').first());
     }
-    FileServers.close();
+
+    fileServers.close();
 
     qDebug() << ServerList;
 
@@ -51,12 +63,12 @@ void MainWindow::loadServerList()
 // Uses QTextStream to append an entry to the server txt file.  Calls loadServerList() to refresh from the modified file.
 void MainWindow::appendServerList(QString NewServer)
 {
-    if (FileServers.open(QFile::ReadWrite | QIODevice::Append)) {
-        QTextStream out(&FileServers);
+    if (fileServers.open(QFile::ReadWrite | QIODevice::Append)) {
+        QTextStream out(&fileServers);
         if (NewServer.length() > 0)
             out << endl << NewServer;
     }
-    FileServers.close();
+    fileServers.close();
     MainWindow::loadServerList();
 }
 
@@ -90,5 +102,7 @@ void MainWindow::on_Restore_Btn_File_clicked()
 
 void MainWindow::on_Backup_Btn_RunBackup_clicked()
 {
-    FILE* fd = exp_popen("ping google.com");
+//    FILE* fd = exp_popen("ssh htpc@192.168.42.102");
+//    std::string host = "myhost";
+//    FILE *expect = exp_popen((char *) host.c_str());
 }
